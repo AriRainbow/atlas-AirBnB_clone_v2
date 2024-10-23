@@ -34,7 +34,7 @@ class TestHBNBCommand(unittest.TestCase):
         # Check for the instance name in the output
 
     @patch('sys.stdout', new_callable=StringIO)
-    def test_do_destroy(self, mock_stdout): 
+    def test_do_destroy(self, mock_stdout):
         """ Test the destroy command """
         command = HBNBCommand()
         instance_id = command.do_create('User')  # Create a user first
