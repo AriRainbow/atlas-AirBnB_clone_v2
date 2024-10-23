@@ -30,7 +30,8 @@ class TestHBNBCommand(unittest.TestCase):
         command = HBNBCommand()
         instance_id = command.do_create('User')  # Create a user first
         command.do_show(instance_id)  # Use the actual instance ID
-        self.assertIn('User', mock_stdout.getvalue())  # Check for the instance name in the output
+        self.assertIn('User', mock_stdout.getvalue())
+        # Check for the instance name in the output
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_do_destroy(self, mock_stdout): 
@@ -46,7 +47,8 @@ class TestHBNBCommand(unittest.TestCase):
         command = HBNBCommand()
         instance_id = command.do_create('User')  # Create a user
         command.do_all('User')  # Retrieve all instances
-        self.assertIn('User', mock_stdout.getvalue())  # Check for the instance name in the output
+        self.assertIn('User', mock_stdout.getvalue())
+        # Check for the instance name in the output
 
 
 if __name__ == "__main__":
