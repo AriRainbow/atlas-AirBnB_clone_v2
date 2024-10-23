@@ -29,7 +29,7 @@ class TestHBNBCommand(unittest.TestCase):
         """ Test the show command """
         command = HBNBCommand()
         instance_id = command.do_create('User')  # Create a user first
-        command.do_show(instance_id)  # Use the actual instance ID
+        command.do_show(f'User {instance_id}')  # Use the actual instance ID
         self.assertIn('User', mock_stdout.getvalue())
         # Check for the instance name in the output
 
@@ -38,7 +38,7 @@ class TestHBNBCommand(unittest.TestCase):
         """ Test the destroy command """
         command = HBNBCommand()
         instance_id = command.do_create('User')  # Create a user first
-        command.do_destroy(instance_id)  # Use the actual instance ID
+        command.do_destroy(f'User {instance_id}')  # Use the actual instance ID
         self.assertIn('** no instance found **', mock_stdout.getvalue())
 
     @patch('sys.stdout', new_callable=StringIO)
