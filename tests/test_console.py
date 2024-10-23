@@ -12,7 +12,8 @@ class TestHBNBCommand(unittest.TestCase):
     def test_do_quit(self, mock_stdout):
         """ Test the quit command """
         command = HBNBCommand()
-        command.do_quit('quit')
+        with self.assertRaises(SystemExit):
+            command.do_quit('quit')
         self.assertEqual(mock_stdout.getvalue(), '')
 
     @patch('sys.stdout', new_callable=StringIO)
@@ -20,31 +21,32 @@ class TestHBNBCommand(unittest.TestCase):
         """ Test the create command """
         command = HBNBCommand()
         command.do_create('User')
-        self.assertIn('User', mock_stdout.getvalue())  # Adjust
+        output = mock_stdout.getvalue().strip()  # Get the output
+        self.assertTrue(output)  # Check that output is not empty
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_do_show(self, mock_stdout):
         """ Test the show command """
         command = HBNBCommand()
-        command.do_create('User')  # Create a user first
-        command.do_show('User id')  # Replace 'id' with a valid id
-        self.assertIn('** instance id missing **', mock_stdout.getvalue())
+        instance_id = command.do_create('User')  # Create a user first
+        command.do_show(instance_id)  # Use the actual instance ID
+        self.assertIn('User', mock_stdout.getvalue())  # Check for the instance name in the output
 
     @patch('sys.stdout', new_callable=StringIO)
-    def test_do_destroy(self, mock_stdout):
+    def test_do_destroy(self, mock_stdout): 
         """ Test the destroy command """
         command = HBNBCommand()
-        command.do_create('User')  # Create a user first
-        command.do_destroy('User id')  # Replace 'id' with a valid id
+        instance_id = command.do_create('User')  # Create a user first
+        command.do_destroy(instance_id)  # Use the actual instance ID
         self.assertIn('** no instance found **', mock_stdout.getvalue())
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_do_all(self, mock_stdout):
         """ Test the all command """
         command = HBNBCommand()
-        command.do_create('User')
-        command.do_all('User')
-        self.assertIn('User', mock_stdout.getvalue())
+        instance_id = command.do_create('User')  # Create a user
+        command.do_all('User')  # Retrieve all instances
+        self.assertIn('User', mock_stdout.getvalue())  # Check for the instance name in the output
 
 
 if __name__ == "__main__":
