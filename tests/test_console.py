@@ -20,7 +20,7 @@ class TestHBNBCommand(unittest.TestCase):
         """ Test the create command """
         command = HBNBCommand()
         command.do_create('User')
-        self.assertIn('User', mock_stdout.getvalue())  # Adjust based on actual output
+        self.assertIn('User', mock_stdout.getvalue()) # Adjust
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_do_show(self, mock_stdout):
@@ -46,5 +46,7 @@ class TestHBNBCommand(unittest.TestCase):
         command.do_all('User')
         self.assertIn('User', mock_stdout.getvalue())
 
+
 if __name__ == "__main__":
     unittest.main()
+    
