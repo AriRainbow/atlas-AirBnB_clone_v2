@@ -22,8 +22,6 @@ class test_state(test_basemodel):
         self.assertEqual(type(new.name), str)
 
 
-
-
 class TestStateDB(TestCase):
     """Test State class with database storage."""
 
