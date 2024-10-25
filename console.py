@@ -3,13 +3,13 @@
 import cmd
 import sys
 from models.base_model import BaseModel
-from models.__init__ import storage
 from models.user import User
 from models.place import Place
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
@@ -113,17 +113,48 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def do_create(self, args):
-        """ Create an object of any class"""
-        if not args:
+    def do_create(self, arg):
+        """Create a new instance with given parameters."""
+        args = arg.split()
+        if len(args) == 0:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+
+        class_name = args[0]
+        if class_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
-        storage.new(new_instance)
-        storage.save()
+
+        # Create a new instance of the class
+        new_instance = HBNBCommand.classes[class_name]()
+
+        # Loop through the parameters (starting from index 1)
+        for param in args[1:]:
+            if '=' not in param:
+                continue
+
+            key, value = param.split('=', 1)
+
+            # Process string values
+            if value.startswith('"') and value.endswith('"'):
+                value = value[1:-1].replace('_', ' ').replace('\\"', '"')
+
+            # Process integer values
+            elif value.isdigit():
+                value = int(value)
+
+            # Process float values
+            else:
+                try:
+                    value = float(value)
+                except ValueError:
+                    continue
+
+            # Set the attribute to the new instance
+            setattr(new_instance, key, value)
+
+        # Save the new instance
+        new_instance.save()
         print(new_instance.id)
 
     def help_create(self):
