@@ -4,6 +4,8 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from models.base_model import Base
+from models.state import State
+from models.city import City
 
 
 class DBStorage:
@@ -27,15 +29,20 @@ class DBStorage:
             self.drop_all()
 
     def all(self, cls=None):
-        """ Queries all objects in the database """
-        from models import storage
+        """ Queries all objects in the database of a specified class """
+        classes = [State, City]  # Add any additional classes here
+        results = {}
+
         if cls:
             query = self.__session.query(cls).all()
+            for obj in query:
+                results[f"{type(obj).__name__}.{obj.id}"] = obj
         else:
-            query = self.__session.query(Base).all()  # Adjust if needed
-
-        return {f"{type(obj).__name__}.{obj.id}": obj for obj in query}
-    
+            for class_type in classes:
+                for obj in self.__session.query(class_type).all():
+                    results[f"{type(obj).__name__}.{obj.id}"] = obj
+        
+        return results
     def new(self, obj):
         """ Adds a new object to the current session """
         self.__session.add(obj)
