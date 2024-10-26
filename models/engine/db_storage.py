@@ -29,18 +29,21 @@ class DBStorage:
             self.drop_all()
 
     def all(self, cls=None):
-        """ Queries all objects in the database of a specified class """
-        classes = [State, City]  # Add any additional classes here
-        results = {}
-
+        """Query all objects depending on the class."""
         if cls:
-            query = self.__session.query(cls).all()
-            for obj in query:
-                results[f"{type(obj).__name__}.{obj.id}"] = obj
+            if isinstance(cls, str):
+                cls = self.classes.get(cls)
+                if not cls:
+                    return []
         else:
-            for class_type in classes:
-                for obj in self.__session.query(class_type).all():
-                    results[f"{type(obj).__name__}.{obj.id}"] = obj
+            cls = self.classes.values()
+
+        all_objects = []
+        for model in cls:
+            query = self.session.query(model).all()
+            all_objects.extend(query)
+
+        return all_objects
         
         return results
     def new(self, obj):
