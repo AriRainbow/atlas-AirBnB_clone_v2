@@ -11,3 +11,9 @@ GRANT ALL PRIVILEGES ON hbnb_dev_db.* TO 'hbnb_dev'@'localhost';
 
 -- Apply changes
 FLUSH PRIVILEGES;
+
+-- Create the states table
+CREATE TABLE IF NOT EXISTS states (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(128) NOT NULL
+);
