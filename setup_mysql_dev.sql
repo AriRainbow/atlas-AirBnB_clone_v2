@@ -26,7 +26,7 @@ DROP TABLE IF EXISTS cities;
 
 -- Create the cities table
 CREATE TABLE cities (
-    id VARCHAR(60) NOT NULL PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(128) NOT NULL
     -- Add other columns as needed
 );
