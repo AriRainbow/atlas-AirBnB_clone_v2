@@ -28,5 +28,5 @@ DROP TABLE IF EXISTS cities;
 CREATE TABLE cities (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(128) NOT NULL
-    FOREIGN KEY (state_id) REFERENCES states(id)
+    CONSTRAINT fk_state FOREIGN KEY (state_id) REFERENCES states(id)
 );
