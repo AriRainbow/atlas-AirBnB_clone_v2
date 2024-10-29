@@ -157,6 +157,14 @@ class HBNBCommand(cmd.Cmd):
             # Set the attribute to the new instance
             setattr(new_instance, key, value)
 
+        # Check required attributes for User
+        if class_name == "User":
+            required_attrs = ["email", "password", "first_name", "last_name"]
+            missing_attrs = [attr for attr in required_attrs if not getattr(new_instance, attr, None)]
+            if missing_attrs:
+                print(f"** Missing attributes for User: {', '.join(missing_attrs)} **")
+                return
+
         # Save the new instance
         new_instance.save()
         print(new_instance.id)
