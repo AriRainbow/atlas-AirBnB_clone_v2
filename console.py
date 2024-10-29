@@ -139,6 +139,10 @@ class HBNBCommand(cmd.Cmd):
             if value.startswith('"') and value.endswith('"'):
                 value = value[1:-1].replace('_', ' ').replace('\\"', '"')
 
+            # Explicitly check for 'state_id' and cast as integer
+            elif key == 'state_id' and value.isdigit():
+                value = int(value)
+
             # Process integer values
             elif value.isdigit():
                 value = int(value)
