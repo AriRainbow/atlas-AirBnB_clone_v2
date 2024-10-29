@@ -52,7 +52,7 @@ class BaseModel:
     def to_dict(self):
         """Convert instance into dict format, excluding SQLAlchemy state"""
         dictionary = {key: (value.isoformat() if isinstance(value,
-                                                            datetime) else value)
+                            datetime) else value)
                       for key, value in self.__dict__.items()
                       if key != '_sa_instance_state'}
         return dictionary
