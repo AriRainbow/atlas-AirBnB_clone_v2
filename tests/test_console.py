@@ -28,7 +28,7 @@ class TestHBNBCommand(unittest.TestCase):
     def test_do_show(self, mock_stdout):
         """ Test the show command """
         command = HBNBCommand()
-  
+
         # Create a user instance and capture its ID from output
         command.do_create('User email="test@example.com" password="password"')
         instance_id = mock_stdout.getvalue().strip()  # Capture the ID output
@@ -39,7 +39,8 @@ class TestHBNBCommand(unittest.TestCase):
 
         # Attempt to show the User instance using the captured ID
         command.do_show(f'User {instance_id}')
-        self.assertIn('User', mock_stdout.getvalue())  # Verify the expected output
+        # Verify the expected output
+        self.assertIn('User', mock_stdout.getvalue())
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_do_destroy(self, mock_stdout):
