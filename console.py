@@ -169,8 +169,8 @@ class HBNBCommand(cmd.Cmd):
             missing_attrs = [attr for attr in required_attrs if not getattr
                              (new_instance, attr, None)]
             if missing_attrs:
-                print(f"** Missing attributes for User:
-                      {', '.join(missing_attrs)} **")
+                print(f"** Missing attributes for User: "
+                      f"{', '.join(missing_attrs)} **")
                 return
 
         # Save the new instance
