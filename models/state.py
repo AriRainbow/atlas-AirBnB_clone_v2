@@ -3,7 +3,7 @@
 from models.base_model import BaseModel, Base
 from models.city import City
 from sqlalchemy import Column, String
-from sqlalchemy.orm import relationship 
+from sqlalchemy.orm import relationship
 
 
 class State(BaseModel, Base):
@@ -12,12 +12,15 @@ class State(BaseModel, Base):
     name = Column(String(128), nullable=False)
 
     # For DBStorage
-    cities = relationship("City", backref="state", cascade="all, delete-orphan")
+    cities = relationship("City", backref="state",
+                          cascade="all, delete-orphan")
 
     # For FileStorage
     @property
     def cities(self):
-        """Getter attribute that returns the list of City instances with state_id equals to the current State.id"""
+        """Getter attribute that returns the list of City instances with
+        state_id equals to the current State.id"""
         from models import storage
         all_cities = storage.all(City)
-        return [city for city in all_cities.values() if city.state_id == self.id]
+        return [city for city in all_cities.values()
+                if city.state_id == self.id]

@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, DateTime
 
-#Define Base for SQLAlchemy if DBSTorage is active
+# Define Base for SQLAlchemy if DBSTorage is active
 Base = declarative_base()
 
 
@@ -14,8 +14,10 @@ class BaseModel:
 
     # SQLAlchemy columns (only if DBStorage is active)
     id = Column(String(60), primary_key=True, nullable=False)
-    created_at = Column(DateTime, nullable=False, default=datetime.now(timezone.utc))
-    updated_at = Column(DateTime, nullable=False, default=datetime.now(timezone.utc))
+    created_at = Column(DateTime, nullable=False,
+                        default=datetime.now(timezone.utc))
+    updated_at = Column(DateTime, nullable=False,
+                        default=datetime.now(timezone.utc))
 
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model with SQLAlchemy compatibility"""
@@ -49,7 +51,8 @@ class BaseModel:
 
     def to_dict(self):
         """Convert instance into dict format, excluding SQLAlchemy state"""
-        dictionary = {key: (value.isoformat() if isinstance(value, datetime) else value)
+        dictionary = {key: (value.isoformat() if isinstance(value,
+                                                            datetime) else value)
                       for key, value in self.__dict__.items()
                       if key != '_sa_instance_state'}
         return dictionary
