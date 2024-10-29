@@ -28,15 +28,15 @@ class TestHBNBCommand(unittest.TestCase):
     def test_do_show(self, mock_stdout):
         """ Test the show command """
         command = HBNBCommand()
-        
+  
         # Create a user instance and capture its ID from output
         command.do_create('User email="test@example.com" password="password"')
         instance_id = mock_stdout.getvalue().strip()  # Capture the ID output
-    
+
         # Clear the mock_stdout buffer for the next output
         mock_stdout.truncate(0)
         mock_stdout.seek(0)
-    
+
         # Attempt to show the User instance using the captured ID
         command.do_show(f'User {instance_id}')
         self.assertIn('User', mock_stdout.getvalue())  # Verify the expected output
