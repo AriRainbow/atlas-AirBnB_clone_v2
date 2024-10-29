@@ -44,8 +44,9 @@ class DBStorage:
             all_objects.extend(query)
 
         return all_objects
-        
+
         return results
+    
     def new(self, obj):
         """ Adds a new object to the current session """
         self.__session.add(obj)
@@ -63,9 +64,10 @@ class DBStorage:
         """ Creates all tables and session """
         from models.city import City  # Import all classes inheriting Base
         from models.state import State
-        
+
         Base.metadata.create_all(self.__engine)
-        session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        session_factory = sessionmaker(bind=self.__engine,
+                                       expire_on_commit=False)
         Session = scoped_session(session_factory)
         self.__session = Session()
 
