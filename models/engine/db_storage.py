@@ -46,7 +46,7 @@ class DBStorage:
         return all_objects
 
         return results
-    
+
     def new(self, obj):
         """ Adds a new object to the current session """
         self.__session.add(obj)
