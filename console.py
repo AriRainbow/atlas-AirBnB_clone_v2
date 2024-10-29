@@ -128,6 +128,12 @@ class HBNBCommand(cmd.Cmd):
         # Create a new instance of the class
         new_instance = HBNBCommand.classes[class_name]()
 
+        # Check for required state_id if class is City
+        if class_name == "City":
+            if "state_id" not in args[1:]:
+                print("** state_id missing **")
+                return
+
         # Loop through the parameters (starting from index 1)
         for param in args[1:]:
             if '=' not in param:
@@ -139,8 +145,8 @@ class HBNBCommand(cmd.Cmd):
             if value.startswith('"') and value.endswith('"'):
                 value = value[1:-1].replace('_', ' ').replace('\\"', '"')
 
-            # Explicitly check for 'state_id' and cast as integer
-            elif key == 'state_id' and value.isdigit():
+            # Process integer values
+            elif value.isdigit():
                 value = int(value)
 
             # Process integer values
