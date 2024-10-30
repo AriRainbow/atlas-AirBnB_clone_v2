@@ -1,10 +1,19 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
-from sqlalchemy import Column, String, Integer, Float, ForeignKey
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel, Base
 from models.review import Review
 from models import storage  # For accessing the storage type
+from models.amenity import Amenity
+
+# Define the association table for Place and Amenity
+place_amenity = Table(
+    'place_amenity',
+    Base.metadata,
+    Column('place_id', String(60), ForeignKey('places.id'), primary_key=True, nullable=False),
+    Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False)
+)
 
 
 class Place(BaseModel, Base):
@@ -29,3 +38,22 @@ class Place(BaseModel, Base):
         def reviews(self):
             """Return a list of Review instances with place_id matching this Place's id."""
             return [review for review in storage.all(Review).values() if review.place_id == self.id]
+
+    if storage.storage_type == 'db':
+        amenities = relationship(
+            "Amenity",
+            secondary=place_amenity,
+            viewonly=False,
+            backref="place_amenities"
+        )
+    else:
+        @property
+        def amenities(self):
+            """Getter for amenities when using FileStorage."""
+            return [amenity for amenity in storage.all(Amenity).values() if amenity.id in self.amenity_ids]
+
+        @amenities.setter
+        def amenities(self, amenity):
+            """Setter for adding amenities in FileStorage."""
+            if isinstance(amenity, Amenity):
+                self.amenity_ids.append(amenity.id)
