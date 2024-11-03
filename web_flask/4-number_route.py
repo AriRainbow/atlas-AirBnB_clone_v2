@@ -37,5 +37,6 @@ def number(n):
     """ Display '<n> is a number' only if <n> is an integer. """
     return f"{n} is a number"
 
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
