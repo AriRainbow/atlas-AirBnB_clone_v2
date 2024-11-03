@@ -1,26 +1,26 @@
 #!/usr/bin/python3
-"""A script that starts a Flask web application."""
+""" A script that starts a Flask web application. """
 
-from flask import Flask, escape
+from flask import Flask  # Removed escape import
 
 app = Flask(__name__)
 
 
 @app.route('/', strict_slashes=False)
 def hello_hbnb():
-    """Display 'Hello HBNB!' at the root route."""
+    """ Display 'Hello HBNB!' at the root route. """
     return "Hello HBNB!"
 
 
 @app.route('/hbnb', strict_slashes=False)
 def hbnb():
-    """Display 'HBNB' at the '/hbnb' route."""
+    """ Display 'HBNB' at the '/hbnb' route. """
     return "HBNB"
 
 
 @app.route('/c/<text>', strict_slashes=False)
 def c_text(text):
-    """Display 'C ' followed by the value of the text variable."""
+    """ Display 'C ' followed by the value of the text variable. """
     return f"C {text.replace('_', ' ')}"
 
 
