@@ -74,3 +74,7 @@ class DBStorage:
     def drop_all(self):
         """ Drops all tables in the database """
         Base.metadata.drop_all(self.__engine)
+
+    def close(self):
+        """ Close the SQLAlchemy session. """
+        self.__session.remove()
