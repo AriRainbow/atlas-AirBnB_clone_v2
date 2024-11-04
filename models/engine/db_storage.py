@@ -12,6 +12,7 @@ class DBStorage:
     """ Database storage engine """
     __engine = None
     __session = None
+    classes = {"State": State, "City": City}  # Mapping class names to class references
 
     def __init__(self):
         """ Initializes the DBStorage """
@@ -40,12 +41,10 @@ class DBStorage:
 
         all_objects = []
         for model in cls:
-            query = self.session.query(model).all()
+            query = self.__session.query(model).all()
             all_objects.extend(query)
+        return all_objects  # Removed unreachable return
 
-        return all_objects
-
-        return results
 
     def new(self, obj):
         """ Adds a new object to the current session """
@@ -62,9 +61,6 @@ class DBStorage:
 
     def reload(self):
         """ Creates all tables and session """
-        from models.city import City  # Import all classes inheriting Base
-        from models.state import State
-
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(bind=self.__engine,
                                        expire_on_commit=False)
@@ -77,4 +73,5 @@ class DBStorage:
 
     def close(self):
         """ Close the SQLAlchemy session. """
-        self.__session.remove()
+        if self.__session:
+            self.__session.remove()  # Use remove() only if using scoped_session
