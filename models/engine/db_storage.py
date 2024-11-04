@@ -64,7 +64,7 @@ class DBStorage:
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(bind=self.__engine,
                                        expire_on_commit=False)
-        self.__session = scoped_session(session_factory)()  # Create a new scoped session
+        self.__session = scoped_session(session_factory)  # Create a new scoped session
 
     def drop_all(self):
         """ Drops all tables in the database """
@@ -73,4 +73,5 @@ class DBStorage:
     def close(self):
         """ Close the SQLAlchemy session. """
         if self.__session:
-            self.__session.remove()  # Use remove() only if using scoped_session
+            self.__session.remove()  # Call remove on the scoped session
+        self.__session = None  # Set to None to prevent new session creation
