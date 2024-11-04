@@ -13,7 +13,7 @@ from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
-    """ Contains the functionality for the HBNB console"""
+    """ Contains the functionality for the HBNB console """
 
     # determines prompt for interactive/non-interactive modes
     prompt = '(hbnb) ' if sys.__stdin__.isatty() else ''
@@ -31,12 +31,12 @@ class HBNBCommand(cmd.Cmd):
             }
 
     def preloop(self):
-        """Prints if isatty is false"""
+        """ Prints if isatty is false """
         if not sys.__stdin__.isatty():
             print('(hbnb)')
 
     def precmd(self, line):
-        """Reformat command line for advanced command syntax.
+        """ Reformat command line for advanced command syntax.
 
         Usage: <class name>.<command>([<id> [<*args> or <**kwargs>]])
         (Brackets denote optional fields in usage example.)
@@ -87,17 +87,17 @@ class HBNBCommand(cmd.Cmd):
             return line
 
     def postcmd(self, stop, line):
-        """Prints if isatty is false"""
+        """ Prints if isatty is false """
         if not sys.__stdin__.isatty():
             print('(hbnb) ', end='')
         return stop
 
     def do_quit(self, command):
-        """ Method to exit the HBNB console"""
+        """ Method to exit the HBNB console """
         exit()
 
     def help_quit(self):
-        """ Prints the help documentation for quit  """
+        """ Prints the help documentation for quit """
         print("Exits the program with formatting\n")
 
     def do_EOF(self, arg):
@@ -114,7 +114,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, arg):
-        """Create a new instance with given parameters."""
+        """ Create a new instance with given parameters. """
         args = arg.split()
         if len(args) == 0:
             print("** class name missing **")
@@ -249,7 +249,7 @@ class HBNBCommand(cmd.Cmd):
         print("[Usage]: destroy <className> <objectId>\n")
 
     def do_all(self, args):
-        """ Shows all objects, or all objects of a class"""
+        """ Shows all objects, or all objects of a class """
         print_list = []
 
         if args:
@@ -272,7 +272,7 @@ class HBNBCommand(cmd.Cmd):
         print("[Usage]: all <className>\n")
 
     def do_count(self, args):
-        """Count current number of class instances"""
+        """ Count current number of class instances """
         count = 0
         for k, v in storage._FileStorage__objects.items():
             if args == k.split('.')[0]:
@@ -280,7 +280,20 @@ class HBNBCommand(cmd.Cmd):
         print(count)
 
     def help_count(self):
-        """ """
+        """
+        Displays usage information for the count command.
+
+        The count command retrieves the number of instances
+        of a specified class currently stored in the database.
+    
+        Usage:
+            count <class_name>
+
+        Example:
+            count State
+
+        This will print the total count of State objects.
+        """
         print("Usage: count <class_name>")
 
     def do_update(self, args):

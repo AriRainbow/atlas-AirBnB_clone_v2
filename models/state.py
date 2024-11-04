@@ -19,7 +19,7 @@ class State(BaseModel, Base):
     # For FileStorage
     @property
     def cities(self):
-        """Getter attribute that returns the list of City instances with
+        """ Getter attribute that returns the list of City instances with
         state_id equals to the current State.id, if storage engine 
         is not DBStorage. """
         if os.getenv('HBNB_TYPE_STORAGE') != 'db':
