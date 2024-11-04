@@ -80,4 +80,3 @@ class DBStorage:
         """ Close the SQLAlchemy session. """
         if self.__session:
             self.__session.remove()  # Call remove on the scoped session
-        self.__session = None  # Set to None to prevent new session creation
